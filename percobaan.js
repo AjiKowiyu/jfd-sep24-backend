@@ -13,5 +13,8 @@ http.createServer( function(request, response) {
         </ul>`
     )
 }).listen(3000, function() {
-    console.log('Server sudah nyala, buka http://localhost:3000')
+    console.log('Server aktif, buka http://localhost:3000')
 })
+
+// tes nambah komentar
+// kirim ke 2x
