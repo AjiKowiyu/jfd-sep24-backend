@@ -11,21 +11,36 @@ http.createServer( function(request, response) {
     }
     // halaman profil
     else if (request.url == '/profil') {
+        let tahun_lahir = 1990
+        let tahun_ini = 2024
+        let umur = tahun_ini - tahun_lahir
+
         response.end(
             `<ul>
                 <li>Nama lengkap: Aji Kowiyu</li>
                 <li>Nama panggilan: Aji/Kowi</li>
                 <li>Alamat: Pluit, Jakarta Utara</li>
                 <li>Pekerjaan: Senior Programmer @ Agung Podomoro Group</li>
+                <li>tanggal lahir: 17 Agustus ${tahun_lahir}</li>
+                <li>umur: ${umur} tahun</li>
             </ul>`
         )
     }
     // halaman hubungi-saya
     else if (request.url == '/hubungi-saya') {
+        let kontak = {
+            wa: '081293260970',
+            email: 'ajikowiyu@gmail.com',
+            linkedin: 'linkedin.com/ajikowiyu',
+            ig: '@aji_kowiyu',
+        }
+
         response.end(
             `<ul>
-                <li>WA: 081293260970</li>
-                <li>Email: ajikowiyu@gmail.com</li>
+                <li>WhatsApp: ${kontak.wa}</li>
+                <li>Email: ${kontak.email}</li>
+                <li>LinkedIn: ${kontak.linkedin}</li>
+                <li>Instagram: ${kontak.ig}</li>
             </ul>`
         )
     }
