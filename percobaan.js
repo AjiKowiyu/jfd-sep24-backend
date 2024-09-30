@@ -34,5 +34,8 @@ http.createServer( function(request, response) {
         response.end(`<h1>404: Halaman tidak ditemukan</h1><hr>`)
     }
 }).listen(3000, function() {
-    console.log('Server sudah nyala, buka http://localhost:3000')
+    console.log('Server aktif, buka http://localhost:3000')
 })
+
+// tes nambah komentar
+// kirim ke 2x
