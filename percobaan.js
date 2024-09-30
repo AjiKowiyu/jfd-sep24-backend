@@ -7,7 +7,10 @@ http.createServer( function(request, response) {
 
     // halaman utama
     if (request.url == '/') {
-        response.end(`<h1>Selamat datang di website ajikowiyu.com</h1><hr>`)
+        response.end(
+            `<h1>Selamat datang di website ajikowiyu.com</h1><hr>
+            <a href="/profil">Lihat Profil</a>`
+        )
     }
     // halaman profil
     else if (request.url == '/profil') {
@@ -23,7 +26,9 @@ http.createServer( function(request, response) {
                 <li>Pekerjaan: Senior Programmer @ Agung Podomoro Group</li>
                 <li>tanggal lahir: 17 Agustus ${tahun_lahir}</li>
                 <li>umur: ${umur} tahun</li>
-            </ul>`
+            </ul>
+            <br>
+            <a href="/">Balik ke beranda</a>`
         )
     }
     // halaman hubungi-saya
