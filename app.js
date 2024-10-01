@@ -2,18 +2,32 @@ const express   = require('express')
 const app       = express()
 
 
+app.set('view engine', 'ejs')   //setting penggunaan template engine untuk express
+app.set('views', './view-ejs')  //setting penggunaan folder untuk menyimpan file .ejs
+
+
+// function render('nama-file')
+// nama file nya wajib berekstensi .ejs
+// otomatis mengambil file .ejs yg ada di folder view-ejs
+
+
 app.get('/', function(req, res) {
-    res.send('<h1>Hello World</h1>')
+    res.render('beranda')
 })
 
 
 app.get('/pendidikan', function(req, res) {
-    res.send('<h1>Riwayat Pendidikan</h1>')
+    let profil = {
+        nama: 'Aji Kowiyu',
+        s1: 'ITB Swadharma: Sistem Informasi',
+        smk: 'SMK Remaja Pluit: Akuntansi',
+    }
+    res.render('page-pendidikan', profil)
 })
 
 
 app.get('/karyawan', function(req, res) {
-    res.send('<h1>List Karyawan</h1>')
+    res.render('page-karyawan')
 })
 
 
