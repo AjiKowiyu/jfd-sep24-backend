@@ -109,9 +109,47 @@ app.get('/karyawan/detail/:id_karyawan', async function(req,res) {
 
 
 
-app.get('/karyawan/tambah', function(req,res) {
-    res.render('page-karyawan-form-tambah')
+function getAll_jabatan() {
+    return new Promise( (resolve, reject) => {
+        let sqlSyntax =
+        `SELECT * FROM jabatan`
+
+        db.query(sqlSyntax, function(errorSql, hasil) {
+            if (errorSql) {
+                reject(errorSql)
+            } else {
+                resolve(hasil)
+            }
+        })
+    })
+}
+
+
+function getAll_agama() {
+    return new Promise( (resolve, reject) => {
+        let sqlSyntax =
+        `SELECT * FROM agama`
+
+        db.query(sqlSyntax, function(errorSql, hasil) {
+            if (errorSql) {
+                reject(errorSql)
+            } else {
+                resolve(hasil)
+            }
+        })
+    })
+}
+
+app.get('/karyawan/tambah', async function(req,res) {
+    let data = {
+        jabatan: await getAll_jabatan(),
+        agama: await getAll_agama(),
+    }
+    res.render('page-karyawan-form-tambah', data)
 })
+
+
+
 
 let formValidasiInsert = [
     body('form_nik').notEmpty().isNumeric(),

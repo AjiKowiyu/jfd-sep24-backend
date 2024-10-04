@@ -25,6 +25,25 @@
     <textarea name="form_alamat" rows="5" cols="50"></textarea>
     <br><br>
 
+    <label for="">Jabatan</label><br>
+    <select name="form_jabatan">
+        <option value="" selected>-- pilih --</option>
+        <% for (const i in jabatan) { %>
+            <option value="<%= jabatan[i].id %>"><%= jabatan[i].nama %></option>
+        <% } %>
+    </select>
+    <br><br>
+
+    <label for="">Agama</label><br>
+    <select name="form_agaman">
+        <option value="" selected>-- pilih --</option>
+        <% for (const i in agama) { %>
+            <option value="<%= agama[i].id %>"><%= agama[i].nama %></option>
+        <% } %>
+    </select>
+    <br><br>
+
+
     <button type="submit">simpan</button>
     
 </form>
