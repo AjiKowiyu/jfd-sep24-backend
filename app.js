@@ -151,9 +151,6 @@ app.post('/karyawan/proses-insert-data', formValidasiInsert, async function(req,
     // 1. tangkap isi data dari masing-masing form
     // req.body             => ambil semua inputan dari form
     // req.body.nama_form   => ambil satuan inputan dari form
-
-    
-
 })
 
 
@@ -181,6 +178,36 @@ function insert_karyawan( req ) {
         })
     })
 }
+
+
+
+function hapusKaryawan(idkry) {
+    return new Promise( (resolve, reject) => {
+        let sqlSyntax =
+        `DELETE FROM karyawan WHERE id = ?`
+
+        db.query(sqlSyntax, [idkry], function(errorSql, hasil) {
+            if (errorSql) {
+                reject(errorSql)
+            } else {
+                resolve(hasil)
+            }
+        })
+    })
+}
+
+
+
+app.get('/karyawan/hapus/:id_karyawan', async function(req,res) {
+    try {
+        let hapus = await hapusKaryawan( req.params.id_karyawan )
+        if (hapus.affectedRows > 0) {
+            res.redirect('/karyawan')
+        }
+    } catch (error) {
+        throw error
+    }
+})
 
 
 app.listen(3000, ()=>{
