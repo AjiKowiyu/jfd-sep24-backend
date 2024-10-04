@@ -93,7 +93,8 @@ app.get('/pendidikan', function(req, res) {
 app.get('/karyawan', async function(req, res) {
     // proses penarikan data
     let data = {
-        karyawan: await getAll_karyawan()
+        karyawan: await getAll_karyawan(),
+        notifikasi: req.query.notif,
     }
     res.render('page-karyawan', data)
 })
@@ -168,7 +169,7 @@ app.post('/karyawan/proses-insert-data', formValidasiInsert, async function(req,
             // 3. proses pengecekan terinput ke db atau gagal
             if (insert.affectedRows > 0) {
                 // 3a. jika berhasil, tampilkan pesan sukses
-                res.redirect('/karyawan')
+                res.redirect('/karyawan?notif=Berhasil input karyawan baru')
                 // console.log('berhasil input ke database')
             }
         } catch (error) {
