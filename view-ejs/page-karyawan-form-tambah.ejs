@@ -1,5 +1,12 @@
 <h1>Input karyawan baru</h1>
 
+<% if (typeof pesanError !== 'undefined') { %>
+    <span style="color: red;">
+        <%= pesanError[0].path +': '+ pesanError[0].msg +' '+ pesanError[0].value %>
+    </span>
+    <br><br>
+<% } %>
+
 <form action="/karyawan/proses-insert-data" method="post">
 
     <label for="">Nomor induk karyawan</label>

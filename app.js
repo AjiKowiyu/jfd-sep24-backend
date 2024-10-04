@@ -1,6 +1,7 @@
 const express   = require('express')
 const app       = express()
 const mysql     = require('mysql2')
+const {body, query, validationResult} = require('express-validator')
 
 
 // sambungkan ke mysql
@@ -112,26 +113,46 @@ app.get('/karyawan/tambah', function(req,res) {
     res.render('page-karyawan-form-tambah')
 })
 
+let formValidasiInsert = [
+    body('form_nik').notEmpty().isNumeric(),
+    body('form_nama').notEmpty().isString(),
+]
 
-app.post('/karyawan/proses-insert-data', async function(req,res) {
+app.post('/karyawan/proses-insert-data', formValidasiInsert, async function(req,res) {
+    const errors = validationResult(req)
+    // jika lolos validasi
+    if (errors.isEmpty()) {
+        // in case request params meet the validation criteria
+        try {
+            // 2. kirim sebagai script SQL
+            let insert = await insert_karyawan( req )
+    
+            // 3. proses pengecekan terinput ke db atau gagal
+            if (insert.affectedRows > 0) {
+                // 3a. jika berhasil, tampilkan pesan sukses
+                res.redirect('/karyawan')
+                // console.log('berhasil input ke database')
+            }
+        } catch (error) {
+            // 3b. jika gagal, tampilkan pesan error
+            throw error
+        }
+    }
+    // jika tidak lolos
+    else {
+        // res.status(422).json({errors: errors.array()})
+        let errorData = {
+            pesanError: errors.array()
+        }
+        errorData.pesanError[0].fields
+        res.render('page-karyawan-form-tambah', errorData)
+    }
+    
     // 1. tangkap isi data dari masing-masing form
     // req.body             => ambil semua inputan dari form
     // req.body.nama_form   => ambil satuan inputan dari form
 
-    try {
-        // 2. kirim sebagai script SQL
-        let insert = await insert_karyawan( req )
-
-        // 3. proses pengecekan terinput ke db atau gagal
-        if (insert.affectedRows > 0) {
-            // 3a. jika berhasil, tampilkan pesan sukses
-            res.redirect('/karyawan')
-            // console.log('berhasil input ke database')
-        }
-    } catch (error) {
-        // 3b. jika gagal, tampilkan pesan error
-        throw error
-    }
+    
 
 })
 
