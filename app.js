@@ -195,19 +195,31 @@ app.post('/karyawan/proses-insert-data', formValidasiInsert, async function(req,
 function insert_karyawan( req ) {
     return new Promise( (resolve, reject) => {
         let sqlSyntax =
-        `INSERT INTO karyawan
-        (nama, nik, tanggal_lahir, alamat, jabatan, agama)
-        VALUES
-        (?, ?, ?, ?, ?, ?)`
+        `INSERT INTO karyawan SET ?`
 
-        let sqlData = [
-            req.body.form_nama,
-            req.body.form_nik,
-            req.body.form_tanggal_lahir,
-            req.body.form_alamat,
-            req.body.form_jabatan,
-            req.body.form_agama,
-        ]
+        let sqlData = {
+            nama            : req.body.form_nama,
+            nik             : req.body.form_nik,
+            tanggal_lahir   : req.body.form_tanggal_lahir,
+            alamat          : req.body.form_alamat,
+            jabatan         : req.body.form_jabatan,
+            agama           : req.body.form_agama,
+        }
+
+        // let sqlSyntax =
+        // `INSERT INTO karyawan
+        // (nama, nik, tanggal_lahir, alamat, jabatan, agama)
+        // VALUES
+        // (?, ?, ?, ?, ?, ?)`
+
+        // let sqlData = [
+        //     req.body.form_nama,
+        //     req.body.form_nik,
+        //     req.body.form_tanggal_lahir,
+        //     req.body.form_alamat,
+        //     req.body.form_jabatan,
+        //     req.body.form_agama,
+        // ]
 
         db.query(sqlSyntax, sqlData, function(errorSql, hasil) {
             if (errorSql) {
