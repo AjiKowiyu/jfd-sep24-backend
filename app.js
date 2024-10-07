@@ -277,6 +277,45 @@ app.get('/karyawan/edit/:id_karyawan', async function(req,res) {
 
 
 
+app.post('/karyawan/proses-update-data/:id_karyawan', async function(req,res) {
+    try {
+        let update = await update_karyawan( req, req.params.id_karyawan )
+        if (update.affectedRows > 0) {
+            res.redirect('/karyawan?notif=Berhasil perbarui data karyawan')
+        }
+    } catch (error) {
+        
+    }
+})
+
+
+
+function update_karyawan(req, id_karyawan) {
+    return new Promise( (resolve, reject) => {
+        let sqlSyntax =
+        `UPDATE karyawan SET ? WHERE id = ?`
+
+        let sqlData = {
+            nama            : req.body.form_nama,
+            nik             : req.body.form_nik,
+            tanggal_lahir   : req.body.form_tanggal_lahir,
+            alamat          : req.body.form_alamat,
+            jabatan         : req.body.form_jabatan,
+            agama           : req.body.form_agama,
+        }
+
+        db.query(sqlSyntax, [sqlData, id_karyawan], function(errorSql, hasil) {
+            if (errorSql) {
+                reject(errorSql)
+            } else {
+                resolve(hasil)
+            }
+        })
+    })
+}
+
+
+
 app.listen(3000, ()=>{
     console.log('Server aktif, buka http://localhost:3000')
 })
