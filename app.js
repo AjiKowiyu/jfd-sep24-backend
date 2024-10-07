@@ -1,6 +1,7 @@
 const express   = require('express')
 const app       = express()
 const mysql     = require('mysql2')
+const moment    = require('moment')
 const {body, query, validationResult} = require('express-validator')
 
 
@@ -261,6 +262,19 @@ app.get('/karyawan/hapus/:id_karyawan', async function(req,res) {
         throw error
     }
 })
+
+
+
+app.get('/karyawan/edit/:id_karyawan', async function(req,res) {
+    let data = {
+        satukaryawan: await getOne_karyawan( req.params.id_karyawan ),
+        jabatan: await getAll_jabatan(),
+        agama: await getAll_agama(),
+        moment: moment,
+    }
+    res.render('page-karyawan-form-edit', data)
+})
+
 
 
 app.listen(3000, ()=>{
