@@ -279,7 +279,7 @@ app.get('/karyawan/edit/:id_karyawan', async function(req,res) {
 
 app.post('/karyawan/proses-update-data/:id_karyawan', async function(req,res) {
     try {
-        let update = await update_karyawan( req, req.params.id_karyawan )
+        let update = await update_karyawan( req )
         if (update.affectedRows > 0) {
             res.redirect('/karyawan?notif=Berhasil perbarui data karyawan')
         }
@@ -290,7 +290,7 @@ app.post('/karyawan/proses-update-data/:id_karyawan', async function(req,res) {
 
 
 
-function update_karyawan(req, id_karyawan) {
+function update_karyawan(req) {
     return new Promise( (resolve, reject) => {
         let sqlSyntax =
         `UPDATE karyawan SET ? WHERE id = ?`
@@ -304,7 +304,7 @@ function update_karyawan(req, id_karyawan) {
             agama           : req.body.form_agama,
         }
 
-        db.query(sqlSyntax, [sqlData, id_karyawan], function(errorSql, hasil) {
+        db.query(sqlSyntax, [sqlData, req.params.id_karyawan], function(errorSql, hasil) {
             if (errorSql) {
                 reject(errorSql)
             } else {
