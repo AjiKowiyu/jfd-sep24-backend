@@ -111,41 +111,13 @@ app.get('/karyawan/detail/:id_karyawan', async function(req,res) {
 
 
 
-function getAll_jabatan() {
-    return new Promise( (resolve, reject) => {
-        let sqlSyntax =
-        `SELECT * FROM jabatan`
-
-        db.query(sqlSyntax, function(errorSql, hasil) {
-            if (errorSql) {
-                reject(errorSql)
-            } else {
-                resolve(hasil)
-            }
-        })
-    })
-}
-
-
-function getAll_agama() {
-    return new Promise( (resolve, reject) => {
-        let sqlSyntax =
-        `SELECT * FROM agama`
-
-        db.query(sqlSyntax, function(errorSql, hasil) {
-            if (errorSql) {
-                reject(errorSql)
-            } else {
-                resolve(hasil)
-            }
-        })
-    })
-}
+const model_jabatan = require('./model/model_jabatan')
+const model_agama = require('./model/model_agama')
 
 app.get('/karyawan/tambah', async function(req,res) {
     let data = {
-        jabatan: await getAll_jabatan(),
-        agama: await getAll_agama(),
+        jabatan: await model_jabatan.getAll_jabatan(),
+        agama: await model_agama.getAll_agama(),
     }
     res.render('page-karyawan-form-tambah', data)
 })
@@ -268,8 +240,8 @@ app.get('/karyawan/hapus/:id_karyawan', async function(req,res) {
 app.get('/karyawan/edit/:id_karyawan', async function(req,res) {
     let data = {
         satukaryawan: await getOne_karyawan( req.params.id_karyawan ),
-        jabatan: await getAll_jabatan(),
-        agama: await getAll_agama(),
+        jabatan: await model_jabatan.getAll_jabatan(),
+        agama: await model_agama.getAll_agama(),
         moment: moment,
     }
     res.render('page-karyawan-form-edit', data)
