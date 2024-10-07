@@ -21,6 +21,9 @@ const model_jabatan     = require('./model/model_jabatan')
 const model_agama       = require('./model/model_agama')
 const model_karyawan    = require('./model/model_karyawan')
 
+const cont_default      = require('./controller/controller_default')
+const cont_pendidikan   = require('./controller/controller_pendidikan')
+const cont_karyawan     = require('./controller/controller_karyawan')
 
 // untuk mengambil data yg ter-encoded(enkripsi) dari form html
 // yang dikirimkan melalui protokol http
@@ -34,19 +37,8 @@ app.set('views', './view-ejs')
 // otomatis mengambil file .ejs yg ada di folder view-ejs
 
 
-app.get('/', function(req, res) {
-    res.render('beranda')
-})
-
-
-app.get('/pendidikan', function(req, res) {
-    let profil = {
-        nama: 'Aji Kowiyu',
-        s1: 'ITB Swadharma: Sistem Informasi',
-        smk: 'SMK Remaja Pluit: Akuntansi',
-    }
-    res.render('page-pendidikan', profil)
-})
+app.get('/', cont_default.halaman_beranda)
+app.get('/pendidikan', cont_pendidikan.halaman_pendidikan)
 
 
 app.get('/karyawan', async function(req, res) {
